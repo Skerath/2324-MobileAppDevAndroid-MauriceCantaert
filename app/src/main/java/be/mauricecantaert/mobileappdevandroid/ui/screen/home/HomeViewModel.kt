@@ -16,13 +16,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.IOException
+import retrofit2.HttpException
 
 class HomeViewModel(
     private val newsApiRepository: NewsRepository,
 ) : ViewModel() {
 
-    private var apiState: NewsArticlesApiState by mutableStateOf(NewsArticlesApiState.Loading)
+    var apiState: NewsArticlesApiState by mutableStateOf(NewsArticlesApiState.Loading)
 
     private val _uiState = MutableStateFlow(NewsArticleListState())
     val uiState = _uiState.asStateFlow()
@@ -54,9 +54,13 @@ class HomeViewModel(
                     it.copy(newsArticles = listResult)
                 }
                 NewsArticlesApiState.Success
-            } catch (e: IOException) {
+            } catch (e: HttpException) {
                 NewsArticlesApiState.Error(e.message ?: "Something went wrong")
             }
         }
+    }
+
+    fun refresh() {
+        getNewsArticles()
     }
 }

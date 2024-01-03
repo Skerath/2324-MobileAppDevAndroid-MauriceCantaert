@@ -12,6 +12,7 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.R
+import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
+import be.mauricecantaert.mobileappdevandroid.ui.common.LoadingIndicator
 import be.mauricecantaert.mobileappdevandroid.ui.common.NewsCard
 
 @Composable
@@ -30,7 +33,7 @@ fun HomeScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO */ },
+                onClick = { homeViewModel.refresh() },
                 content = {
                     Icon(
                         Icons.Filled.Refresh,
@@ -43,21 +46,26 @@ fun HomeScreen(
         },
         floatingActionButtonPosition = FabPosition.End,
     ) { paddingValues ->
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(250.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-                .padding(paddingValues),
-        ) {
-            items(uiState.newsArticles) { article ->
-                NewsCard(
+        when (val state = homeViewModel.apiState) {
+            is NewsArticlesApiState.Error -> Text(text = state.errorMessage)
+            NewsArticlesApiState.Loading -> LoadingIndicator()
+            NewsArticlesApiState.Success ->
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(250.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
-                        .padding(8.dp)
-                        .size(width = 240.dp, height = 140.dp),
-                    article = article,
-                )
-            }
+                        .padding(paddingValues),
+                ) {
+                    items(uiState.newsArticles) { article ->
+                        NewsCard(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .size(width = 240.dp, height = 200.dp),
+                            article = article,
+                        )
+                    }
+                }
         }
     }
 }
