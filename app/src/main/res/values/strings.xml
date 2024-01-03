@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MobileAppDevAndroid</string>
+    <string name="home_title">Home</string>
+    <string name="saved_title">Saved</string>
+
+    <string name="navigate_back">Navigate back</string>
+    <string name="navigate_hamburger">Open navigation drawer</string>
 </resources>
