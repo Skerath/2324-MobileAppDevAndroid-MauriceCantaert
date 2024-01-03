@@ -5,4 +5,5 @@
 
     <string name="navigate_back">Navigate back</string>
     <string name="navigate_hamburger">Open navigation drawer</string>
+    <string name="navigate_refresh">Refresh news articles</string>
 </resources>

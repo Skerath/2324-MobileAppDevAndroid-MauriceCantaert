@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import be.mauricecantaert.mobileappdevandroid.navigation.NavigationRoutes
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.AppBar
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.NavigationDrawer
+import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -70,7 +71,7 @@ fun Application(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 composable(NavigationRoutes.Home.name) {
-                    Text(text = "Homepage")
+                    HomeScreen()
                 }
                 composable(NavigationRoutes.Saved.name) {
                     Text(text = "Saved items page")
