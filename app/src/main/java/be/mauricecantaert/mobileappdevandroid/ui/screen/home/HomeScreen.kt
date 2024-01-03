@@ -13,6 +13,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -20,7 +22,11 @@ import be.mauricecantaert.mobileappdevandroid.R
 import be.mauricecantaert.mobileappdevandroid.ui.common.NewsCard
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeViewModel: HomeViewModel,
+) {
+    val uiState by homeViewModel.uiState.collectAsState()
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -41,30 +47,15 @@ fun HomeScreen() {
             columns = GridCells.Adaptive(250.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier
+                .padding(paddingValues),
         ) {
-            items(
-                listOf(
-                    "Nieuwsartikel 1",
-                    "News Article 2",
-                    "Drie",
-                    "Vier",
-                    "Vijf",
-                    "Zes",
-                    "Zeven",
-                    "Acht",
-                    "Negen",
-                    "Tien",
-                    "Elf",
-                    "Twaalf",
-                    "Dertien",
-                ),
-            ) { article ->
+            items(uiState.newsArticles) { article ->
                 NewsCard(
                     modifier = Modifier
                         .padding(8.dp)
                         .size(width = 240.dp, height = 140.dp),
-                    title = article,
+                    article = article,
                 )
             }
         }

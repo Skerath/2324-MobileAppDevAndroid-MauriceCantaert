@@ -8,11 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import be.mauricecantaert.mobileappdevandroid.model.NewsArticle
 
 @Composable
 fun NewsCard(
     modifier: Modifier = Modifier,
-    title: String,
+    article: NewsArticle,
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -21,9 +22,13 @@ fun NewsCard(
         modifier = modifier,
     ) {
         Text(
-            text = title,
+            text = article.title,
             modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center,
+        )
+        Text(
+            text = article.summary,
+            textAlign = TextAlign.Start,
         )
     }
 }
