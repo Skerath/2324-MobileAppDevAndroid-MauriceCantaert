@@ -17,9 +17,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import be.mauricecantaert.mobileappdevandroid.ui.navigation.NavigationRoutes
-import be.mauricecantaert.mobileappdevandroid.ui.navigation.drawer.AppBar
-import be.mauricecantaert.mobileappdevandroid.ui.navigation.drawer.NavigationDrawer
+import be.mauricecantaert.mobileappdevandroid.navigation.NavigationRoutes
+import be.mauricecantaert.mobileappdevandroid.ui.navigation.AppBar
+import be.mauricecantaert.mobileappdevandroid.ui.navigation.NavigationDrawer
 import kotlinx.coroutines.launch
 
 @Composable

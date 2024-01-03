@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.navigation
+package be.mauricecantaert.mobileappdevandroid.navigation
 
 import android.content.Context
 import androidx.annotation.StringRes

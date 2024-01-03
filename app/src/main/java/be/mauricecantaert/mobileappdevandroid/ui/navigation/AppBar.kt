@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.navigation.drawer
+package be.mauricecantaert.mobileappdevandroid.ui.navigation
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
