@@ -1,5 +1,7 @@
 package be.mauricecantaert.mobileappdevandroid.ui.common.newsCard
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,8 +10,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,6 +29,9 @@ fun NewsCard(
     isFavorite: Boolean = true, // TODO
     setFavorite: (Boolean) -> Unit = {},
 ) {
+    val context = LocalContext.current
+    val readArticleIntent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(article.articleUrl)) }
+
     Card(
         modifier = modifier,
     ) {
@@ -55,7 +62,7 @@ fun NewsCard(
             NewsCardButtons(
                 isFavorite = isFavorite,
                 setFavorite = { setFavorite(it) },
-                navigateArticle = {}, // TODO
+                navigateArticle = { context.startActivity(readArticleIntent) },
             )
         }
     }
