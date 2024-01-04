@@ -5,5 +5,7 @@
 
     <string name="navigate_back">Navigate back</string>
     <string name="navigate_hamburger">Open navigation drawer</string>
+    <string name="navigate_previous">Retrieve previous 10 news articles</string>
+    <string name="navigate_next">Retrieve next 10 news articles</string>
     <string name="navigate_refresh">Refresh news articles</string>
 </resources>
