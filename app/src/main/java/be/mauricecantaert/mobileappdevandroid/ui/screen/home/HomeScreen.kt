@@ -7,10 +7,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,31 +34,53 @@ fun HomeScreen(
     val uiState by homeViewModel.uiState.collectAsState()
 
     Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { homeViewModel.refresh() },
-                content = {
-                    Icon(
-                        Icons.Filled.Refresh,
-                        contentDescription = stringResource(id = R.string.navigate_refresh),
-                    )
+        bottomBar = {
+            BottomAppBar(
+                actions = {
+                    IconButton(
+                        onClick = { homeViewModel.getNewsArticles(FetchOption.PREVIOUS) },
+                        enabled = uiState.navigationDetails.previous != null,
+                    ) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(id = R.string.navigate_refresh),
+                        )
+                    }
+                    IconButton(
+                        onClick = { homeViewModel.getNewsArticles(FetchOption.NEXT) },
+                        enabled = uiState.navigationDetails.next != null,
+                    ) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = stringResource(id = R.string.navigate_refresh),
+                        )
+                    }
                 },
-                modifier = Modifier
-                    .padding(all = 16.dp),
+                floatingActionButton = {
+                    IconButton(
+                        onClick = { homeViewModel.getNewsArticles(FetchOption.RESTART) },
+                        enabled = uiState.navigationDetails.next != null,
+                    ) {
+                        Icon(
+                            Icons.Filled.Refresh,
+                            contentDescription = stringResource(id = R.string.navigate_refresh),
+                        )
+                    }
+                },
             )
         },
         floatingActionButtonPosition = FabPosition.End,
-    ) { paddingValues ->
+    ) {
         when (val state = homeViewModel.apiState) {
             is NewsArticlesApiState.Error -> Text(text = state.errorMessage)
             NewsArticlesApiState.Loading -> LoadingIndicator()
-            NewsArticlesApiState.Success ->
+            NewsArticlesApiState.Success -> {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(250.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
-                        .padding(paddingValues),
+                        .padding(it),
                 ) {
                     items(uiState.newsArticles) { article ->
                         NewsCard(
@@ -66,6 +91,7 @@ fun HomeScreen(
                         )
                     }
                 }
+            }
         }
     }
 }

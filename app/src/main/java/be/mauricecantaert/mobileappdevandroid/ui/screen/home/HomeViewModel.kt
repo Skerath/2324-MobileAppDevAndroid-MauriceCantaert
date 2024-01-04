@@ -28,7 +28,7 @@ class HomeViewModel(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getNewsArticles()
+        getNewsArticles(FetchOption.RESTART)
     }
 
     companion object {
@@ -45,22 +45,41 @@ class HomeViewModel(
         }
     }
 
-    private fun getNewsArticles() {
+    private fun getOffset(url: String?): Int {
+        if (url == null) return 0
+        val urlParameters = url.split("?").getOrNull(1) // Extract query parameters part
+        val offsetParameter = urlParameters
+            ?.split("&") // get all parameters into a string list of parameters
+            ?.map { it.split("=") } // split all parameters into string lists of parameter option & parameter value
+            ?.find { it[0] == "offset" } // find the offset parameter, or null if it doesn't exist
+
+        return offsetParameter?.getOrNull(1)?.toIntOrNull()
+            ?: 0 // return the offset, or 0 if there is none
+    }
+
+    fun getNewsArticles(option: FetchOption) {
         viewModelScope.launch {
             apiState = try {
                 NewsArticlesApiState.Loading
-                val listResult = newsApiRepository.getArticles()
-                _uiState.update {
-                    it.copy(newsArticles = listResult)
+
+                val offset = when (option) {
+                    FetchOption.NEXT -> getOffset(uiState.value.navigationDetails.next)
+                    FetchOption.PREVIOUS -> getOffset(uiState.value.navigationDetails.previous)
+                    FetchOption.RESTART -> 0
                 }
+
+                val response = newsApiRepository.getArticles(offset)
+                _uiState.update {
+                    it.copy(
+                        navigationDetails = response.first,
+                        newsArticles = response.second,
+                    )
+                }
+
                 NewsArticlesApiState.Success
             } catch (e: HttpException) {
                 NewsArticlesApiState.Error(e.message ?: "Something went wrong")
             }
         }
-    }
-
-    fun refresh() {
-        getNewsArticles()
     }
 }

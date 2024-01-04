@@ -1,5 +1,10 @@
 package be.mauricecantaert.mobileappdevandroid.model
 
+data class NavigationDetails(
+    val next: String? = null,
+    val previous: String? = null,
+)
+
 data class NewsArticle(
     val id: Long,
     val title: String,
@@ -16,4 +21,7 @@ sealed interface NewsArticlesApiState {
     data object Loading : NewsArticlesApiState
 }
 
-data class NewsArticleListState(val newsArticles: List<NewsArticle> = listOf())
+data class NewsArticleListState(
+    val navigationDetails: NavigationDetails = NavigationDetails(),
+    val newsArticles: List<NewsArticle> = listOf(),
+)

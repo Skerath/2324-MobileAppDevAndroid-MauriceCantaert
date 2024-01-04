@@ -1,5 +1,6 @@
 package be.mauricecantaert.mobileappdevandroid.network
 
+import be.mauricecantaert.mobileappdevandroid.model.NavigationDetails
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticle
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -13,17 +14,21 @@ data class ApiNewsArticlesResponse(
     val results: List<ApiNewsArticle>,
 )
 
-fun ApiNewsArticlesResponse.asDomainObjects(): List<NewsArticle> = results.map {
-    NewsArticle(
-        id = it.id,
-        title = it.title,
-        articleUrl = it.url,
-        imageUrl = it.imageUrl,
-        author = it.newsSite,
-        summary = it.summary,
-        publishedAt = it.publishedAt,
-    )
-}
+fun ApiNewsArticlesResponse.asDomainObject(): Pair<NavigationDetails, List<NewsArticle>> =
+    NavigationDetails(
+        next = next,
+        previous = previous,
+    ) to results.map {
+        NewsArticle(
+            id = it.id,
+            title = it.title,
+            articleUrl = it.url,
+            imageUrl = it.imageUrl,
+            author = it.newsSite,
+            summary = it.summary,
+            publishedAt = it.publishedAt,
+        )
+    }
 
 @Serializable
 data class ApiNewsArticle(
