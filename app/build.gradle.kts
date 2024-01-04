@@ -91,4 +91,7 @@ dependencies {
     testImplementation("androidx.room:room-testing:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+    // Images from url
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }

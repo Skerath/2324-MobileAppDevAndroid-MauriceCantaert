@@ -2,7 +2,6 @@ package be.mauricecantaert.mobileappdevandroid.ui.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -17,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import be.mauricecantaert.mobileappdevandroid.ui.common.BottomNewsArticleNavigation
 import be.mauricecantaert.mobileappdevandroid.ui.common.LoadingIndicator
-import be.mauricecantaert.mobileappdevandroid.ui.common.NewsCard
+import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.NewsCard
 
 @Composable
 fun HomeScreen(
@@ -39,7 +38,7 @@ fun HomeScreen(
             NewsArticlesApiState.Loading -> LoadingIndicator()
             NewsArticlesApiState.Success -> {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(250.dp),
+                    columns = GridCells.Adaptive(350.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
@@ -47,9 +46,7 @@ fun HomeScreen(
                 ) {
                     items(uiState.newsArticles) { article ->
                         NewsCard(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(width = 240.dp, height = 200.dp),
+                            modifier = Modifier.padding(8.dp),
                             article = article,
                         )
                     }

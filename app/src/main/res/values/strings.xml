@@ -3,9 +3,17 @@
     <string name="home_title">Home</string>
     <string name="saved_title">Saved</string>
 
+    <string name="error_indicator">Something went wrong</string>
+
+
     <string name="navigate_back">Navigate back</string>
     <string name="navigate_hamburger">Open navigation drawer</string>
     <string name="navigate_previous">Retrieve previous 10 news articles</string>
     <string name="navigate_next">Retrieve next 10 news articles</string>
     <string name="navigate_refresh">Refresh news articles</string>
+
+    <string name="news_card_read">Refresh news articles</string>
+    <string name="news_card_favorite">Save news article for later</string>
+    <string name="news_card_unfavorite">Remove saved news article from favorites</string>
+    <string name="news_card_author">By %1s</string>
 </resources>
