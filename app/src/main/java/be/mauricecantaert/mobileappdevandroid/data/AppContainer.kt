@@ -1,5 +1,9 @@
 package be.mauricecantaert.mobileappdevandroid.data
 
+import android.content.Context
+import androidx.room.Room
+import be.mauricecantaert.mobileappdevandroid.data.database.NewsDao
+import be.mauricecantaert.mobileappdevandroid.data.database.NewsDatabase
 import be.mauricecantaert.mobileappdevandroid.network.NewsApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -13,7 +17,9 @@ interface AppContainer {
     val newsRepository: NewsRepository
 }
 
-class DefaultAppContainer : AppContainer {
+class DefaultAppContainer(
+    private val context: Context,
+) : AppContainer {
     private val restApiBaseUrl = "https://api.spaceflightnewsapi.net/v4/"
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -38,9 +44,19 @@ class DefaultAppContainer : AppContainer {
         retrofitApi.create(NewsApiService::class.java)
     }
 
+    private val database: NewsDatabase by lazy {
+        Room.databaseBuilder(context, NewsDatabase::class.java, "blanche_db")
+            .build()
+    }
+
+    private val newsDao: NewsDao by lazy {
+        database.newsDao()
+    }
+
     override val newsRepository: NewsRepository by lazy {
         NewsApiRepository(
             newsApiService = newsApiRetrofitService,
+            newsDao = newsDao,
         )
     }
 }

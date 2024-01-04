@@ -82,4 +82,25 @@ class HomeViewModel(
             }
         }
     }
+
+    fun setFavorited(id: Long, wantsAdded: Boolean) {
+        viewModelScope.launch {
+            if (wantsAdded) {
+                newsApiRepository.favoriteArticle(uiState.value.newsArticles.find { it.id == id }!!)
+            } else {
+                newsApiRepository.unfavoriteArticle(id)
+            }
+            _uiState.update {
+                it.copy(
+                    newsArticles = it.newsArticles.map { newsArticle ->
+                        if (newsArticle.id == id) {
+                            newsArticle.copy(isFavorited = wantsAdded)
+                        } else {
+                            newsArticle
+                        }
+                    },
+                )
+            }
+        }
+    }
 }

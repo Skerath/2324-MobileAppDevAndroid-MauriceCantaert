@@ -48,6 +48,8 @@ fun HomeScreen(
                         NewsCard(
                             modifier = Modifier.padding(8.dp),
                             article = article,
+                            isFavorite = article.isFavorited,
+                            setFavorite = { isFavorited -> homeViewModel.setFavorited(article.id, isFavorited) },
                         )
                     }
                 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,6 +22,8 @@ import be.mauricecantaert.mobileappdevandroid.ui.navigation.AppBar
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.NavigationDrawer
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeScreen
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeViewModel
+import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedScreen
+import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -35,6 +36,7 @@ fun Application(
     val scope = rememberCoroutineScope()
 
     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
+    val savedViewModel: SavedViewModel = viewModel(factory = SavedViewModel.Factory)
 
     ModalNavigationDrawer(
         gesturesEnabled = true,
@@ -80,7 +82,9 @@ fun Application(
                     )
                 }
                 composable(NavigationRoutes.Saved.name) {
-                    Text(text = "Saved items page")
+                    SavedScreen(
+                        savedViewModel = savedViewModel,
+                    )
                 }
             }
         }

@@ -26,8 +26,8 @@ import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.News
 fun NewsCard(
     modifier: Modifier = Modifier,
     article: NewsArticle,
-    isFavorite: Boolean = true, // TODO
-    setFavorite: (Boolean) -> Unit = {},
+    isFavorite: Boolean,
+    setFavorite: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
     val readArticleIntent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(article.articleUrl)) }
