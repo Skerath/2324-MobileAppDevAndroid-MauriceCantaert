@@ -32,7 +32,7 @@ fun SavedScreen(
                 )
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(350.dp),
+                    columns = GridCells.Fixed(1),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {

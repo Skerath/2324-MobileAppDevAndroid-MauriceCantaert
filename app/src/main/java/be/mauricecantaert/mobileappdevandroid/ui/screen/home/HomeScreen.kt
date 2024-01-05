@@ -38,7 +38,7 @@ fun HomeScreen(
             NewsArticlesApiState.Loading -> LoadingIndicator()
             NewsArticlesApiState.Success -> {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(350.dp),
+                    columns = GridCells.Fixed(1),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
@@ -49,7 +49,12 @@ fun HomeScreen(
                             modifier = Modifier.padding(8.dp),
                             article = article,
                             isFavorite = article.isFavorited,
-                            setFavorite = { isFavorited -> homeViewModel.setFavorited(article.id, isFavorited) },
+                            setFavorite = { isFavorited ->
+                                homeViewModel.setFavorited(
+                                    article.id,
+                                    isFavorited,
+                                )
+                            },
                         )
                     }
                 }
