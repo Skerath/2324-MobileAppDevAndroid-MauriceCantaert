@@ -1,5 +1,6 @@
 package be.mauricecantaert.mobileappdevandroid.ui.screen.saved.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,7 +36,9 @@ fun OfflineNewsCard(
         modifier = modifier,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .animateContentSize(),
         ) {
             Row(
                 verticalAlignment = Alignment.Top,
