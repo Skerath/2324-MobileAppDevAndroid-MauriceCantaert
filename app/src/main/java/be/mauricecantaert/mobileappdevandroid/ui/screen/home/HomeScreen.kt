@@ -24,7 +24,7 @@ import be.mauricecantaert.mobileappdevandroid.ui.screen.home.components.NewsCard
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel,
-    networkAvailable: () -> Boolean,
+    networkAvailable: Boolean,
     context: Context = LocalContext.current,
 ) {
     val uiState by homeViewModel.uiState.collectAsState()
@@ -32,7 +32,7 @@ fun HomeScreen(
     Scaffold(
         bottomBar = {
             BottomNewsArticleNavigation(
-                navigate = { homeViewModel.getNewsArticles(it, networkAvailable()) },
+                navigate = { homeViewModel.getNewsArticles(it, networkAvailable) },
                 canNavigatePrevious = uiState.navigationDetails.previous != null,
                 canNavigateNext = uiState.navigationDetails.next != null,
             )
@@ -40,7 +40,7 @@ fun HomeScreen(
         floatingActionButtonPosition = FabPosition.End,
     ) {
         when (val state = homeViewModel.apiState) {
-            is NewsArticlesApiState.Error -> ErrorIndicator(text = state.errorType.getMessage(context))
+            is NewsArticlesApiState.Error -> ErrorIndicator(state.errorType.getMessage(context))
             NewsArticlesApiState.Loading -> LoadingIndicator()
             NewsArticlesApiState.Success -> {
                 LazyVerticalGrid(

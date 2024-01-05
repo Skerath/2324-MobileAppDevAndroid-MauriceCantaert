@@ -1,8 +1,6 @@
 package be.mauricecantaert.mobileappdevandroid
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -22,14 +20,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import be.mauricecantaert.mobileappdevandroid.data.FetchOption
 import be.mauricecantaert.mobileappdevandroid.navigation.NavigationRoutes
+import be.mauricecantaert.mobileappdevandroid.network.utils.ConnectionState
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.AppBar
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.NavigationDrawer
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeScreen
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeViewModel
 import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedScreen
 import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedViewModel
+import be.mauricecantaert.mobileappdevandroid.ui.utils.connectivityState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun Application(
     navController: NavHostController = rememberNavController(),
@@ -39,17 +41,11 @@ fun Application(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    val connection by connectivityState()
+    val hasInternetConnection = connection === ConnectionState.Available
+
     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
     val savedViewModel: SavedViewModel = viewModel(factory = SavedViewModel.Factory)
-
-    fun isNetworkAvailable(): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
-        val networkCapabilities = connectivityManager?.activeNetwork ?: return false
-        val activeNetwork =
-            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-        return activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
 
     ModalNavigationDrawer(
         gesturesEnabled = true,
@@ -95,12 +91,15 @@ fun Application(
 //                          Used to check for article's favorite status after unfavoriting on saved articles page.
 //                          And during first load with a check if network is available
                         if (backStackEntry?.destination?.route == NavigationRoutes.Home.name) {
-                            homeViewModel.getNewsArticles(FetchOption.RESTART, isNetworkAvailable())
+                            homeViewModel.getNewsArticles(
+                                FetchOption.RESTART,
+                                hasInternetConnection,
+                            )
                         }
                     }
                     HomeScreen(
                         homeViewModel = homeViewModel,
-                        networkAvailable = { isNetworkAvailable() },
+                        networkAvailable = hasInternetConnection,
                     )
                 }
                 composable(NavigationRoutes.Saved.name) {
