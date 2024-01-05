@@ -79,10 +79,13 @@ fun Application(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 composable(NavigationRoutes.Home.name) {
-                    LaunchedEffect(navController.previousBackStackEntry != null) {
-                        // Refetch latest articles when navigating to homescreen.
-                        // Happens on both first launch & when navigating to home after editing favorites
-                        homeViewModel.getNewsArticles(FetchOption.RESTART)
+                    LaunchedEffect(navController.previousBackStackEntry) {
+//                         Refetch latest articles when navigating to homescreen to recheck favorite status
+                        if (backStackEntry?.destination?.route == NavigationRoutes.Home.name &&
+                            homeViewModel.uiState.value.newsArticles.isNotEmpty() // make sure not to refetch on first load as the viewmodel's init takes care of this
+                        ) {
+                            homeViewModel.getNewsArticles(FetchOption.RESTART)
+                        }
                     }
                     HomeScreen(
                         homeViewModel = homeViewModel,

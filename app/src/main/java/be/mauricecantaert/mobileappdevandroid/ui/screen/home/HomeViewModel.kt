@@ -54,12 +54,15 @@ class HomeViewModel(
             ?: 0 // return the offset, or 0 if there is none
     }
 
-    fun getNewsArticles(option: FetchOption) {
+    init {
+        getNewsArticles(FetchOption.RESTART)
+    }
+
+    fun getNewsArticles(fetchOption: FetchOption) {
         viewModelScope.launch {
             apiState = try {
                 NewsArticlesApiState.Loading
-
-                val offset = when (option) {
+                val offset = when (fetchOption) {
                     FetchOption.NEXT -> getOffset(uiState.value.navigationDetails.next)
                     FetchOption.PREVIOUS -> getOffset(uiState.value.navigationDetails.previous)
                     FetchOption.RESTART -> 0
