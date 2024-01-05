@@ -10,7 +10,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import be.mauricecantaert.mobileappdevandroid.R
-import be.mauricecantaert.mobileappdevandroid.ui.screen.home.FetchOption
+import be.mauricecantaert.mobileappdevandroid.data.FetchOption
 
 @Composable
 fun BottomNewsArticleNavigation(

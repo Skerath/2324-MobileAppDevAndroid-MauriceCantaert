@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import be.mauricecantaert.mobileappdevandroid.ui.common.BottomNewsArticleNavigation
 import be.mauricecantaert.mobileappdevandroid.ui.common.LoadingIndicator
-import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.NewsCard
+import be.mauricecantaert.mobileappdevandroid.ui.screen.home.components.NewsCard
 
 @Composable
 fun HomeScreen(

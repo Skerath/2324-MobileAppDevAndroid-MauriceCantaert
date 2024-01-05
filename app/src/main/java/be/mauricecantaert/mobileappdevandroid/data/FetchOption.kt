@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.screen.home
+package be.mauricecantaert.mobileappdevandroid.data
 
 enum class FetchOption {
     NEXT,

@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
-fun NewsHeader(
+fun NewsCardHeader(
     modifier: Modifier = Modifier,
     title: String,
     author: String,

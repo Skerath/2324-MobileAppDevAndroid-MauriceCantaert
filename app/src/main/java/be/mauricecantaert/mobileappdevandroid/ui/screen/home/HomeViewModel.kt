@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import be.mauricecantaert.mobileappdevandroid.api.NewsApiApplication
+import be.mauricecantaert.mobileappdevandroid.data.FetchOption
 import be.mauricecantaert.mobileappdevandroid.data.NewsRepository
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticleListState
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState

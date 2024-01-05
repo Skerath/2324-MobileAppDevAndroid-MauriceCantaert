@@ -19,8 +19,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticle
 import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsCardButtons
+import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsCardHeader
 import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsCardImage
-import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsHeader
 
 @Composable
 fun OfflineNewsCard(
@@ -43,7 +43,7 @@ fun OfflineNewsCard(
             ) {
                 NewsCardImage(imageUrl = article.imageUrl)
                 Spacer(modifier = Modifier.width(16.dp))
-                NewsHeader(
+                NewsCardHeader(
                     modifier = Modifier.weight(1f),
                     title = article.title,
                     author = article.author,
