@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.screen.saved
+package be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +16,7 @@ import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 class SavedViewModel(
@@ -59,6 +60,12 @@ class SavedViewModel(
         } catch (e: IOException) {
             val errorMessage = e.message ?: "An error occurred"
             apiState = NewsArticlesApiState.Error(errorMessage)
+        }
+    }
+
+    fun removeFavorited(id: Long) {
+        viewModelScope.launch {
+            newsApiRepository.unfavoriteArticle(id)
         }
     }
 }

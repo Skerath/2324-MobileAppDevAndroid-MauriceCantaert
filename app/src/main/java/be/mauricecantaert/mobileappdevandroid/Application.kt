@@ -22,8 +22,8 @@ import be.mauricecantaert.mobileappdevandroid.ui.navigation.AppBar
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.NavigationDrawer
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeScreen
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeViewModel
-import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedScreen
-import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedViewModel
+import be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.SavedScreen
+import be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.SavedViewModel
 import kotlinx.coroutines.launch
 
 @Composable

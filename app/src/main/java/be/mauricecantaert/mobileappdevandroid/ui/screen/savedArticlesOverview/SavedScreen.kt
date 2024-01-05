@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.screen.saved
+package be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import be.mauricecantaert.mobileappdevandroid.ui.common.LoadingIndicator
-import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.NewsCard
+import be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.components.OfflineNewsCard
 
 @Composable
 fun SavedScreen(
@@ -30,11 +30,11 @@ fun SavedScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(favoritedArticles) { article ->
-                    NewsCard(
+                    OfflineNewsCard(
                         modifier = Modifier.padding(8.dp),
                         article = article.first,
-                        isFavorite = true,
-                        setFavorite = {},
+                        removeFavorite = { savedViewModel.removeFavorited(it) },
+                        articleText = article.second.articleText,
                     )
                 }
             }

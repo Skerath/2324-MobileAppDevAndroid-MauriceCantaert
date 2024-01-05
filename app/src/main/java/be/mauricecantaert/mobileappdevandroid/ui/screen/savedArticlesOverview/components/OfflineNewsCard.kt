@@ -1,7 +1,6 @@
-package be.mauricecantaert.mobileappdevandroid.ui.common.newsCard
+package be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.components
 
-import android.content.Intent
-import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,10 +9,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -23,17 +24,17 @@ import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.News
 import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsHeader
 
 @Composable
-fun NewsCard(
+fun OfflineNewsCard(
     modifier: Modifier = Modifier,
     article: NewsArticle,
-    isFavorite: Boolean,
-    setFavorite: (Boolean) -> Unit,
+    articleText: String,
+    removeFavorite: (Long) -> Unit,
 ) {
-    val context = LocalContext.current
-    val readArticleIntent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(article.articleUrl)) }
+    var isExpanded by remember { mutableStateOf(false) }
 
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .clickable { isExpanded = !isExpanded },
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -53,16 +54,16 @@ fun NewsCard(
             }
 
             Text(
-                text = article.summary,
-                maxLines = 3,
+                text = if (isExpanded) articleText else article.summary,
+                maxLines = if (isExpanded) Int.MAX_VALUE else 3,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Justify,
             )
 
             NewsCardButtons(
-                isFavorite = isFavorite,
-                setFavorite = { setFavorite(it) },
-                navigateArticle = { context.startActivity(readArticleIntent) },
+                isFavorite = true,
+                setFavorite = { removeFavorite(article.id) },
+                navigateArticle = { isExpanded = !isExpanded },
             )
         }
     }
