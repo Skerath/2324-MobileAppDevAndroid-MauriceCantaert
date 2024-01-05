@@ -1,5 +1,6 @@
 package be.mauricecantaert.mobileappdevandroid.ui.screen.home
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import be.mauricecantaert.mobileappdevandroid.api.NewsApiApplication
 import be.mauricecantaert.mobileappdevandroid.data.FetchOption
 import be.mauricecantaert.mobileappdevandroid.data.NewsRepository
+import be.mauricecantaert.mobileappdevandroid.model.ErrorType
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticleListState
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 class HomeViewModel(
     private val newsApiRepository: NewsRepository,
@@ -42,8 +45,14 @@ class HomeViewModel(
         }
     }
 
-    private fun getOffset(url: String?): Int {
-        if (url == null) return 0
+    private fun getOffset(fetchOption: FetchOption): Int {
+        val url = when (fetchOption) {
+            FetchOption.NEXT -> uiState.value.navigationDetails.next
+            FetchOption.PREVIOUS -> uiState.value.navigationDetails.previous
+            FetchOption.RESTART -> null
+        }
+            ?: return 0 // get which url to parse the offset from, or immediately return offset 0 if option is restart
+
         val urlParameters = url.split("?").getOrNull(1) // Extract query parameters part
         val offsetParameter = urlParameters
             ?.split("&") // get all parameters into a string list of parameters
@@ -54,31 +63,29 @@ class HomeViewModel(
             ?: 0 // return the offset, or 0 if there is none
     }
 
-    init {
-        getNewsArticles(FetchOption.RESTART)
-    }
-
-    fun getNewsArticles(fetchOption: FetchOption) {
+    fun getNewsArticles(fetchOption: FetchOption, networkAvailable: Boolean) {
+        apiState = NewsArticlesApiState.Loading
         viewModelScope.launch {
             apiState = try {
-                NewsArticlesApiState.Loading
-                val offset = when (fetchOption) {
-                    FetchOption.NEXT -> getOffset(uiState.value.navigationDetails.next)
-                    FetchOption.PREVIOUS -> getOffset(uiState.value.navigationDetails.previous)
-                    FetchOption.RESTART -> 0
+                if (!networkAvailable) {
+                    NewsArticlesApiState.Error(ErrorType.DEVICE_OFFLINE)
+                } else {
+                    val offset = getOffset(fetchOption)
+                    val response = newsApiRepository.getArticles(offset)
+                    _uiState.update {
+                        it.copy(
+                            navigationDetails = response.first,
+                            newsArticles = response.second,
+                        )
+                    }
+                    NewsArticlesApiState.Success
                 }
-
-                val response = newsApiRepository.getArticles(offset)
-                _uiState.update {
-                    it.copy(
-                        navigationDetails = response.first,
-                        newsArticles = response.second,
-                    )
-                }
-
-                NewsArticlesApiState.Success
             } catch (e: HttpException) {
-                NewsArticlesApiState.Error(e.message ?: "Something went wrong")
+                Log.e("HomeViewModel Http Exception", e.message ?: e.toString())
+                NewsArticlesApiState.Error(ErrorType.EXCEPTION)
+            } catch (e: SocketTimeoutException) {
+                Log.e("HomeViewModel Socket Exception", e.message ?: e.toString())
+                NewsArticlesApiState.Error(ErrorType.DEVICE_OFFLINE)
             }
         }
     }

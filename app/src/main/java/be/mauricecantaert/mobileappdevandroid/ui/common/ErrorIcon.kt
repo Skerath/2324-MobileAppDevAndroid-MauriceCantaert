@@ -16,7 +16,7 @@ fun ErrorIcon() {
     Icon(
         imageVector = Icons.Filled.Warning,
         contentDescription = stringResource(id = R.string.error_indicator),
-        modifier = Modifier.size(24.dp),
+        modifier = Modifier.size(64.dp),
         tint = MaterialTheme.colorScheme.error,
     )
 }

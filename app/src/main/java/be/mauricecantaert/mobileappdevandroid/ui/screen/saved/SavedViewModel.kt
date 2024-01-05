@@ -1,5 +1,6 @@
 package be.mauricecantaert.mobileappdevandroid.ui.screen.saved
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,6 +11,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import be.mauricecantaert.mobileappdevandroid.api.NewsApiApplication
 import be.mauricecantaert.mobileappdevandroid.data.NewsRepository
+import be.mauricecantaert.mobileappdevandroid.model.ErrorType
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticle
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticleText
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
@@ -58,8 +60,8 @@ class SavedViewModel(
 
             apiState = NewsArticlesApiState.Success
         } catch (e: IOException) {
-            val errorMessage = e.message ?: "An error occurred"
-            apiState = NewsArticlesApiState.Error(errorMessage)
+            Log.e("SavedViewModel IO Exception", e.message ?: e.toString())
+            apiState = NewsArticlesApiState.Error(ErrorType.EXCEPTION)
         }
     }
 

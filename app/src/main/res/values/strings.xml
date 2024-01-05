@@ -8,6 +8,10 @@
     <string name="error_no_saved_body">Favorite at least one article to read offline.</string>
     <string name="error_no_saved_dismiss">Go Home</string>
 
+    <string name="loading">Loading…</string>
+    <string name="errorMessage_offline">You\'re currently offline\nPlease go online to retrieve articles, or visit your saved articles list</string>
+    <string name="errorMessage_exception">Error while retrieving news articles from server\nPlease try again later.</string>
+
 
     <string name="navigate_back">Navigate back</string>
     <string name="navigate_hamburger">Open navigation drawer</string>

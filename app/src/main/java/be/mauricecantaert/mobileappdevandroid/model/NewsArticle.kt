@@ -37,7 +37,7 @@ data class NewsArticleText(
 
 sealed interface NewsArticlesApiState {
     data object Success : NewsArticlesApiState
-    data class Error(val errorMessage: String) : NewsArticlesApiState
+    data class Error(val errorType: ErrorType) : NewsArticlesApiState
     data object Loading : NewsArticlesApiState
 }
 

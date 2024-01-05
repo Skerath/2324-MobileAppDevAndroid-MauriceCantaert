@@ -1,6 +1,8 @@
 package be.mauricecantaert.mobileappdevandroid
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -39,6 +41,15 @@ fun Application(
 
     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
     val savedViewModel: SavedViewModel = viewModel(factory = SavedViewModel.Factory)
+
+    fun isNetworkAvailable(): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        val networkCapabilities = connectivityManager?.activeNetwork ?: return false
+        val activeNetwork =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        return activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
 
     ModalNavigationDrawer(
         gesturesEnabled = true,
@@ -80,15 +91,16 @@ fun Application(
             ) {
                 composable(NavigationRoutes.Home.name) {
                     LaunchedEffect(navController.previousBackStackEntry) {
-//                         Refetch latest articles when navigating to homescreen to recheck favorite status
-                        if (backStackEntry?.destination?.route == NavigationRoutes.Home.name &&
-                            homeViewModel.uiState.value.newsArticles.isNotEmpty() // make sure not to refetch on first load as the viewmodel's init takes care of this
-                        ) {
-                            homeViewModel.getNewsArticles(FetchOption.RESTART)
+//                         (Re)fetch latest articles when navigating to homescreen.
+//                          Used to check for article's favorite status after unfavoriting on saved articles page.
+//                          And during first load with a check if network is available
+                        if (backStackEntry?.destination?.route == NavigationRoutes.Home.name) {
+                            homeViewModel.getNewsArticles(FetchOption.RESTART, isNetworkAvailable())
                         }
                     }
                     HomeScreen(
                         homeViewModel = homeViewModel,
+                        networkAvailable = { isNetworkAvailable() },
                     )
                 }
                 composable(NavigationRoutes.Saved.name) {
