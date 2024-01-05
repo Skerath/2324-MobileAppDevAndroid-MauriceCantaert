@@ -1,6 +1,5 @@
 package be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,8 +32,7 @@ fun OfflineNewsCard(
     var isExpanded by remember { mutableStateOf(false) }
 
     Card(
-        modifier = modifier
-            .clickable { isExpanded = !isExpanded },
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
