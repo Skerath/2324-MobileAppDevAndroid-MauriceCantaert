@@ -1,6 +1,5 @@
 package be.mauricecantaert.mobileappdevandroid.model
 
-import be.mauricecantaert.mobileappdevandroid.data.database.DbArticleData
 import be.mauricecantaert.mobileappdevandroid.data.database.DbNewsArticle
 
 data class NavigationDetails(
@@ -29,10 +28,7 @@ fun NewsArticle.asDbArticle(articleText: String): DbNewsArticle =
         summary = summary,
         publishedAt = publishedAt,
         isFavorited = true,
-        articleData = DbArticleData(
-            articleId = id,
-            articleText = articleText,
-        ),
+        articleText = articleText,
     )
 
 data class NewsArticleText(

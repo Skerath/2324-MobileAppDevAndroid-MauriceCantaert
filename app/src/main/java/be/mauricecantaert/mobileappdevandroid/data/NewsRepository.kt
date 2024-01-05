@@ -7,9 +7,11 @@ import be.mauricecantaert.mobileappdevandroid.model.NewsArticle
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticleText
 import be.mauricecantaert.mobileappdevandroid.model.asDbArticle
 import be.mauricecantaert.mobileappdevandroid.network.NewsApiService
+import be.mauricecantaert.mobileappdevandroid.network.WebService
 import be.mauricecantaert.mobileappdevandroid.network.asDomainObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.jsoup.Jsoup
 
 interface NewsRepository {
     suspend fun getArticles(offset: Int): Pair<NavigationDetails, List<NewsArticle>>
@@ -22,6 +24,7 @@ interface NewsRepository {
 class NewsApiRepository(
     private val newsApiService: NewsApiService,
     private val newsDao: NewsDao,
+    private val webService: WebService,
 ) : NewsRepository {
     override suspend fun getArticles(offset: Int): Pair<NavigationDetails, List<NewsArticle>> {
         val result = newsApiService.getArticles(offset).asDomainObject()
@@ -36,7 +39,11 @@ class NewsApiRepository(
     }
 
     override suspend fun favoriteArticle(item: NewsArticle) {
-        newsDao.insertNewsArticle(item.asDbArticle("Test"))
+        // retrieve html text from website to read offline
+        val articleHtml = webService.getHtmlFromArticle(item.articleUrl)
+        val parsedArticleHtml = Jsoup.parse(articleHtml).body().text()
+        // insert news article with parsedArticleHtml text as articleText
+        newsDao.insertNewsArticle(item.asDbArticle(parsedArticleHtml))
     }
 
     override suspend fun unfavoriteArticle(id: Long) {

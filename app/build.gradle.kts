@@ -94,4 +94,7 @@ dependencies {
 
     // Images from url
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // Parsing HTML to store offline text
+    implementation("org.jsoup:jsoup:1.17.2")
 }

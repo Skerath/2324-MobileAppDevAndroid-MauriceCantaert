@@ -1,7 +1,5 @@
 package be.mauricecantaert.mobileappdevandroid.data.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticle
@@ -17,13 +15,7 @@ data class DbNewsArticle(
     val summary: String,
     val publishedAt: String,
     val isFavorited: Boolean,
-    @Embedded val articleData: DbArticleData,
-)
-
-@Entity
-data class DbArticleData(
-    @PrimaryKey val articleId: Long,
-    @ColumnInfo(name = "article_text") val articleText: String,
+    val articleText: String,
 )
 
 fun DbNewsArticle.asDomainObject(): Pair<NewsArticle, NewsArticleText> =
@@ -36,6 +28,6 @@ fun DbNewsArticle.asDomainObject(): Pair<NewsArticle, NewsArticleText> =
         summary = summary,
         publishedAt = publishedAt,
         isFavorited = isFavorited,
-    ) to NewsArticleText(articleText = articleData.articleText)
+    ) to NewsArticleText(articleText = articleText)
 
 fun List<DbNewsArticle>.asDomainObjects() = map { it.asDomainObject() }

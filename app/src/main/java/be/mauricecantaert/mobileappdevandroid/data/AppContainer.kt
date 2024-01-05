@@ -5,12 +5,14 @@ import androidx.room.Room
 import be.mauricecantaert.mobileappdevandroid.data.database.NewsDao
 import be.mauricecantaert.mobileappdevandroid.data.database.NewsDatabase
 import be.mauricecantaert.mobileappdevandroid.network.NewsApiService
+import be.mauricecantaert.mobileappdevandroid.network.WebService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 interface AppContainer {
@@ -32,7 +34,7 @@ class DefaultAppContainer(
         .connectTimeout(60, TimeUnit.SECONDS)
         .build()
 
-    private val retrofitApi = Retrofit.Builder()
+    private val newsFetcherApi = Retrofit.Builder()
         .addConverterFactory(
             json.asConverterFactory("application/json".toMediaType()),
         )
@@ -40,12 +42,22 @@ class DefaultAppContainer(
         .client(client)
         .build()
 
+    private val htmlFetcherApi = Retrofit.Builder()
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .baseUrl("http://localhost/") // Retrofit requires a baseurl even though we'll pass the url along as a parameter
+        .client(client)
+        .build()
+
     private val newsApiRetrofitService: NewsApiService by lazy {
-        retrofitApi.create(NewsApiService::class.java)
+        newsFetcherApi.create(NewsApiService::class.java)
+    }
+
+    private val webRetrofitService: WebService by lazy {
+        htmlFetcherApi.create(WebService::class.java)
     }
 
     private val database: NewsDatabase by lazy {
-        Room.databaseBuilder(context, NewsDatabase::class.java, "blanche_db")
+        Room.databaseBuilder(context, NewsDatabase::class.java, "news_database")
             .build()
     }
 
@@ -57,6 +69,7 @@ class DefaultAppContainer(
         NewsApiRepository(
             newsApiService = newsApiRetrofitService,
             newsDao = newsDao,
+            webService = webRetrofitService,
         )
     }
 }
