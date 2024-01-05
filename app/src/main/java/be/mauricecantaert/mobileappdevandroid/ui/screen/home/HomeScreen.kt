@@ -55,6 +55,7 @@ fun HomeScreen(
                             modifier = Modifier.padding(8.dp),
                             article = article,
                             isFavorite = article.isFavorited,
+                            hasInternetAccess = networkAvailable,
                             setFavorite = { isFavorited ->
                                 homeViewModel.setFavorited(
                                     article.id,

@@ -1,5 +1,7 @@
 package be.mauricecantaert.mobileappdevandroid.ui.common.newsCard
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.R
@@ -19,15 +22,27 @@ import be.mauricecantaert.mobileappdevandroid.R
 @Composable
 fun NewsCardButtons(
     isFavorite: Boolean,
+    hasNetworkAccess: Boolean,
     setFavorite: (Boolean) -> Unit,
     navigateArticle: () -> Unit,
+    context: Context = LocalContext.current,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
     ) {
         IconButton(
-            onClick = { setFavorite(!isFavorite) },
+            onClick = {
+                if (!hasNetworkAccess && !isFavorite) { // allow unfavoriting even though there is no network connection
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.errorToast_offline),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                } else {
+                    setFavorite(!isFavorite)
+                }
+            },
         ) {
             Icon(
                 imageVector = if (isFavorite) Icons.Default.Star else Icons.TwoTone.Star,
@@ -36,7 +51,17 @@ fun NewsCardButtons(
             )
         }
         IconButton(
-            onClick = { navigateArticle() },
+            onClick = {
+                if (!hasNetworkAccess) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.errorToast_offline),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                } else {
+                    navigateArticle()
+                }
+            },
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Default.ArrowForward,

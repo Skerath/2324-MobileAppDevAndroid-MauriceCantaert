@@ -27,6 +27,7 @@ fun NewsCard(
     modifier: Modifier = Modifier,
     article: NewsArticle,
     isFavorite: Boolean,
+    hasInternetAccess: Boolean,
     setFavorite: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
@@ -61,6 +62,7 @@ fun NewsCard(
 
             NewsCardButtons(
                 isFavorite = isFavorite,
+                hasNetworkAccess = hasInternetAccess,
                 setFavorite = { setFavorite(it) },
                 navigateArticle = { context.startActivity(readArticleIntent) },
             )

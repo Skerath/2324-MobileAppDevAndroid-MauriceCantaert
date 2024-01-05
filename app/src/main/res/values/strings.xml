@@ -10,6 +10,7 @@
 
     <string name="loading">Loading…</string>
     <string name="errorMessage_offline">You\'re currently offline\nPlease go online to retrieve articles, or visit your saved articles list</string>
+    <string name="errorToast_offline">You must have an active internet connection to do this!</string>
     <string name="errorMessage_exception">Error while retrieving news articles from server\nPlease try again later.</string>
 
 

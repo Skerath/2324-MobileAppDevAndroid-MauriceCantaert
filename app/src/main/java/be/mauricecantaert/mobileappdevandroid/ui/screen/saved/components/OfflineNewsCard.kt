@@ -63,6 +63,7 @@ fun OfflineNewsCard(
 
             NewsCardButtons(
                 isFavorite = true,
+                hasNetworkAccess = true,
                 setFavorite = {
                     removeFavorite(article.id)
                     if (isExpanded) isExpanded = false
