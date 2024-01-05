@@ -7,6 +7,7 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -20,10 +21,11 @@ import androidx.navigation.compose.rememberNavController
 import be.mauricecantaert.mobileappdevandroid.navigation.NavigationRoutes
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.AppBar
 import be.mauricecantaert.mobileappdevandroid.ui.navigation.NavigationDrawer
+import be.mauricecantaert.mobileappdevandroid.ui.screen.home.FetchOption
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeScreen
 import be.mauricecantaert.mobileappdevandroid.ui.screen.home.HomeViewModel
-import be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.SavedScreen
-import be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.SavedViewModel
+import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedScreen
+import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.SavedViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -77,6 +79,10 @@ fun Application(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 composable(NavigationRoutes.Home.name) {
+                    LaunchedEffect(backStackEntry) {
+                        // Refetch latest articles when navigating to homescreen
+                        homeViewModel.getNewsArticles(FetchOption.RESTART)
+                    }
                     HomeScreen(
                         homeViewModel = homeViewModel,
                     )

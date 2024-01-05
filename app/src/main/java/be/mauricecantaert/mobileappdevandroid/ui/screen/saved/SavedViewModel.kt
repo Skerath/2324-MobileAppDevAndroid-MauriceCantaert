@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview
+package be.mauricecantaert.mobileappdevandroid.ui.screen.saved
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.components
+package be.mauricecantaert.mobileappdevandroid.ui.screen.saved.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

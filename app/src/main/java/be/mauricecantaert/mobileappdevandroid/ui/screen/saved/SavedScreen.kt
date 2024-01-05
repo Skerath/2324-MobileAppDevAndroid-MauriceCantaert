@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview
+package be.mauricecantaert.mobileappdevandroid.ui.screen.saved
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import be.mauricecantaert.mobileappdevandroid.ui.common.LoadingIndicator
-import be.mauricecantaert.mobileappdevandroid.ui.screen.savedArticlesOverview.components.OfflineNewsCard
+import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.components.OfflineNewsCard
 
 @Composable
 fun SavedScreen(
