@@ -62,7 +62,7 @@ fun OfflineNewsCard(
                 isFavorite = true,
                 setFavorite = {
                     removeFavorite(article.id)
-                    isExpanded = !isExpanded
+                    if (isExpanded) isExpanded = false
                 },
                 navigateArticle = { isExpanded = !isExpanded },
             )

@@ -79,7 +79,7 @@ fun Application(
                 modifier = Modifier.padding(innerPadding),
             ) {
                 composable(NavigationRoutes.Home.name) {
-                    LaunchedEffect(backStackEntry) {
+                    LaunchedEffect(navController.previousBackStackEntry != null) {
                         // Refetch latest articles when navigating to homescreen.
                         // Happens on both first launch & when navigating to home after editing favorites
                         homeViewModel.getNewsArticles(FetchOption.RESTART)
