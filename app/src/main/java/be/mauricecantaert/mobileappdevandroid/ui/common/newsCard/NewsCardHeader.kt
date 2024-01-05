@@ -2,16 +2,14 @@ package be.mauricecantaert.mobileappdevandroid.ui.common.newsCard
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import be.mauricecantaert.mobileappdevandroid.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -27,21 +25,20 @@ fun NewsCardHeader(
     Column(modifier = modifier) {
         Text(
             text = title,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 4.dp),
+            style = MaterialTheme.typography.titleLarge,
             maxLines = 3,
             overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(bottom = 4.dp),
         )
         Text(
             text = stringResource(id = R.string.news_card_author, author),
             fontStyle = FontStyle.Italic,
-            color = Color.DarkGray,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             modifier = Modifier.padding(bottom = 4.dp),
         )
         Text(
             text = formatPublishDate(publishDate),
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
         )
     }
 }
