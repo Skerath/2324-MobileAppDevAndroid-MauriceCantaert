@@ -18,9 +18,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticle
-import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsCardButtons
-import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsCardHeader
-import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components.NewsCardImage
+import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.NewsCardButtons
+import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.NewsCardHeader
+import be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.NewsCardImage
 
 @Composable
 fun OfflineNewsCard(
@@ -60,7 +60,10 @@ fun OfflineNewsCard(
 
             NewsCardButtons(
                 isFavorite = true,
-                setFavorite = { removeFavorite(article.id) },
+                setFavorite = {
+                    removeFavorite(article.id)
+                    isExpanded = !isExpanded
+                },
                 navigateArticle = { isExpanded = !isExpanded },
             )
         }

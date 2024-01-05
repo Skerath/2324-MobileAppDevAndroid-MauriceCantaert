@@ -28,10 +28,6 @@ class HomeViewModel(
     private val _uiState = MutableStateFlow(NewsArticleListState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        getNewsArticles(FetchOption.RESTART)
-    }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

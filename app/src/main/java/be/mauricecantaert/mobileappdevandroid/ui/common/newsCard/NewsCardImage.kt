@@ -1,4 +1,4 @@
-package be.mauricecantaert.mobileappdevandroid.ui.common.newsCard.components
+package be.mauricecantaert.mobileappdevandroid.ui.common.newsCard
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row

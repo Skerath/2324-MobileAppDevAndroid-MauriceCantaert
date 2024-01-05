@@ -4,6 +4,9 @@
     <string name="saved_title">Saved</string>
 
     <string name="error_indicator">Something went wrong</string>
+    <string name="error_no_saved_title">There are no saved articles</string>
+    <string name="error_no_saved_body">Favorite at least one article to read offline.</string>
+    <string name="error_no_saved_dismiss">Go Home</string>
 
 
     <string name="navigate_back">Navigate back</string>

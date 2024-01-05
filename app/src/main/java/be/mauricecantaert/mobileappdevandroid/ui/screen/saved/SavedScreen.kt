@@ -13,29 +13,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import be.mauricecantaert.mobileappdevandroid.ui.common.LoadingIndicator
+import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.components.NoSavedArticlesAlert
 import be.mauricecantaert.mobileappdevandroid.ui.screen.saved.components.OfflineNewsCard
 
 @Composable
 fun SavedScreen(
     savedViewModel: SavedViewModel,
+    navigateHome: () -> Unit,
 ) {
     val favoritedArticles by savedViewModel.favoritedArticles.collectAsState()
     when (val state = savedViewModel.apiState) {
         is NewsArticlesApiState.Error -> Text(text = state.errorMessage)
         NewsArticlesApiState.Loading -> LoadingIndicator()
         NewsArticlesApiState.Success -> {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(350.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(favoritedArticles) { article ->
-                    OfflineNewsCard(
-                        modifier = Modifier.padding(8.dp),
-                        article = article.first,
-                        removeFavorite = { savedViewModel.removeFavorited(it) },
-                        articleText = article.second.articleText,
-                    )
+            if (favoritedArticles.isEmpty()) {
+                NoSavedArticlesAlert(
+                    onDismiss = { navigateHome() },
+                )
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(350.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    items(favoritedArticles) { article ->
+                        OfflineNewsCard(
+                            modifier = Modifier.padding(8.dp),
+                            article = article.first,
+                            removeFavorite = { savedViewModel.removeFavorited(it) },
+                            articleText = article.second.articleText,
+                        )
+                    }
                 }
             }
         }

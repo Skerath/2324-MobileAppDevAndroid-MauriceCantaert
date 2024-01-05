@@ -80,7 +80,8 @@ fun Application(
             ) {
                 composable(NavigationRoutes.Home.name) {
                     LaunchedEffect(backStackEntry) {
-                        // Refetch latest articles when navigating to homescreen
+                        // Refetch latest articles when navigating to homescreen.
+                        // Happens on both first launch & when navigating to home after editing favorites
                         homeViewModel.getNewsArticles(FetchOption.RESTART)
                     }
                     HomeScreen(
@@ -90,6 +91,7 @@ fun Application(
                 composable(NavigationRoutes.Saved.name) {
                     SavedScreen(
                         savedViewModel = savedViewModel,
+                        navigateHome = { navController.popBackStack() },
                     )
                 }
             }
