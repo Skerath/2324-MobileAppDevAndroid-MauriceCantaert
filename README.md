@@ -20,3 +20,6 @@ Feel free to use in both portrait and landscape mode on your device, with or wit
 ## Prerequisites:
 - ktlint (Android Studio plugin when looking at code, optional)
 - An Android device running at least Android 8.1 
+
+## Documentation
+Kotlin documentation, generated using Dokka, can be found [HERE](documentation/html/index.html).
