@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun NavigationItem(
+    modifier: Modifier = Modifier,
     title: String,
     onClick: () -> Unit,
 ) {
@@ -38,7 +39,7 @@ fun NavigationItem(
         },
         selected = false,
         onClick = { onClick() },
-        modifier = Modifier
+        modifier = modifier
             .height(80.dp)
             .padding(NavigationDrawerItemDefaults.ItemPadding),
     )

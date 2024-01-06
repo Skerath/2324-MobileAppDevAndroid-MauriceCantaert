@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import be.mauricecantaert.mobileappdevandroid.R
@@ -37,6 +38,7 @@ fun AppBar(
                 ) {
                     if (canNavigateBack) {
                         IconButton(
+                            modifier = Modifier.testTag(stringResource(id = R.string.testTag_navigateBack)),
                             onClick = navigateUp,
                         ) {
                             Icon(
@@ -45,7 +47,10 @@ fun AppBar(
                             )
                         }
                     } else {
-                        IconButton(onClick = openDrawer) {
+                        IconButton(
+                            modifier = Modifier.testTag(stringResource(id = R.string.testTag_navigateHamburger)),
+                            onClick = openDrawer,
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Menu,
                                 contentDescription = stringResource(id = R.string.navigate_hamburger),

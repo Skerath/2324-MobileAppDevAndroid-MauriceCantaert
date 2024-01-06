@@ -13,7 +13,6 @@
     <string name="errorToast_offline">You must have an active internet connection to do this!</string>
     <string name="errorMessage_exception">Error while retrieving news articles from server\nPlease try again later.</string>
 
-
     <string name="navigate_back">Navigate back</string>
     <string name="navigate_hamburger">Open navigation drawer</string>
     <string name="navigate_previous">Retrieve previous 10 news articles</string>
@@ -24,4 +23,10 @@
     <string name="news_card_favorite">Save news article for later</string>
     <string name="news_card_unfavorite">Remove saved news article from favorites</string>
     <string name="news_card_author">By %1s</string>
+
+<!--    Test tags-->
+    <string name="testTag_navigateBack">testTag_navigateBack</string>
+    <string name="testTag_navigateHamburger">testTag_navigateHamburger</string>
+    <string name="testTag_navigateHamburger_button">testTag_navigateHamburger_button_%1s</string>
+
 </resources>
