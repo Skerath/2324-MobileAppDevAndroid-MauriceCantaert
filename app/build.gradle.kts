@@ -84,6 +84,11 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // Testing
+    implementation("org.mockito:mockito-core:5.8.0")
+    implementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
     // RoomDB
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")

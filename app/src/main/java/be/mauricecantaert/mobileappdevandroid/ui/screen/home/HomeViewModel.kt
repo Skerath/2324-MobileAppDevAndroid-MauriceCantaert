@@ -22,6 +22,11 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
+/**
+ * ViewModel responsible for managing and providing data for the Home screen UI.
+ *
+ * @property newsApiRepository The repository responsible for fetching news articles.
+ */
 class HomeViewModel(
     private val newsApiRepository: NewsRepository,
 ) : ViewModel() {
@@ -45,6 +50,12 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Retrieves the offset value with based on the provided fetch option to use with the next API GET-call.
+     *
+     * @param fetchOption The option specifying the type of fetch operation (NEXT, PREVIOUS, RESTART).
+     * @return The offset value for the fetch operation.
+     */
     private fun getOffset(fetchOption: FetchOption): Int {
         val url = when (fetchOption) {
             FetchOption.NEXT -> uiState.value.navigationDetails.next
@@ -63,6 +74,12 @@ class HomeViewModel(
             ?: 0 // return the offset, or 0 if there is none
     }
 
+    /**
+     * Fetches news articles based on the provided fetch option and network availability.
+     *
+     * @param fetchOption The option specifying the type of fetch operation (NEXT, PREVIOUS, RESTART).
+     * @param networkAvailable Flag indicating whether an active internet connection is available.
+     */
     fun getNewsArticles(fetchOption: FetchOption, networkAvailable: Boolean) {
         apiState = NewsArticlesApiState.Loading
         viewModelScope.launch {
@@ -90,6 +107,13 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Sets the favorite status of a news article identified by its ID.
+     *
+     * @param id The unique identifier of the news article.
+     * @param wantsAdded Flag indicating whether to add the article to favorites.
+     *                   If `true`, the article will be marked as a favorite for offline reading and an offline copy of the article's text will be saved.
+     */
     fun setFavorited(id: Long, wantsAdded: Boolean) {
         viewModelScope.launch {
             if (wantsAdded) {
