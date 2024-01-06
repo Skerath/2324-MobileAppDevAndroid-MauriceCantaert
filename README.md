@@ -22,4 +22,4 @@ Feel free to use in both portrait and landscape mode on your device, with or wit
 - An Android device running at least Android 8.1 
 
 ## Documentation
-Kotlin documentation, generated using Dokka, can be found [HERE](documentation/html/index.html).
+Kotlin documentation, generated using Dokka, can be found [HERE](https://skerath.github.io/2324-MobileAppDevAndroid-MauriceCantaert/) along with the documentation source code [HERE](docs/index.html).
