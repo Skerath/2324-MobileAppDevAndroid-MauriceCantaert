@@ -68,8 +68,7 @@ class DaoTest {
      * @param amount The number of articles to add to the database.
      */
     private suspend fun addOfflineArticles(amount: Int) {
-        for (i in 0..<amount)
-            dao.insertNewsArticle(offlineArticles[i].asDbArticle("Sample article text belonging to article ${offlineArticles[i].id}"))
+        for (i in 0..<amount) dao.insertNewsArticle(offlineArticles[i].asDbArticle("Sample article text belonging to article ${offlineArticles[i].id}"))
     }
 
     /**
@@ -78,9 +77,9 @@ class DaoTest {
     @Before
     fun createDb() {
         val context: Context = ApplicationProvider.getApplicationContext()
-        database = Room.inMemoryDatabaseBuilder(context, NewsDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        database =
+            Room.inMemoryDatabaseBuilder(context, NewsDatabase::class.java).allowMainThreadQueries()
+                .build()
         dao = database.newsDao()
     }
 
