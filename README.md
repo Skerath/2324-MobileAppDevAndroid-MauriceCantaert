@@ -1,7 +1,7 @@
 # AstroByte
 
-Project for Mobile Application Development: Android.
-HOGENT Campus Aalst
+Project for the [Mobile Application Development: Android](https://bamaflexweb.hogent.be/BMFUIDetailxOLOD.aspx?a=170865&b=5&c=2) course unit.
+University College Ghent / HOGENT: Campus Aalst
 
 AstroByte is a simple space-exploration related news app.
 Fetch the latest articles and press the arrow button to get redirected to the online news article, or press on the star icon to save an article for offline reading.
