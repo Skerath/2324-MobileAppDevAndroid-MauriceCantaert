@@ -6,6 +6,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 fun Application(
     navController: NavHostController = rememberNavController(),
     context: Context = LocalContext.current,
+    windowSize: WindowWidthSizeClass,
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -43,6 +45,11 @@ fun Application(
 
     val connection by connectivityState()
     val hasInternetConnection = connection === ConnectionState.Available
+
+    val isPortraitMobile = when (windowSize) {
+        WindowWidthSizeClass.Compact -> true
+        else -> false
+    }
 
     val homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory)
     val savedViewModel: SavedViewModel = viewModel(factory = SavedViewModel.Factory)
@@ -100,6 +107,7 @@ fun Application(
                     HomeScreen(
                         homeViewModel = homeViewModel,
                         networkAvailable = hasInternetConnection,
+                        pinnedBottomBar = isPortraitMobile,
                     )
                 }
                 composable(NavigationRoutes.Saved.name) {

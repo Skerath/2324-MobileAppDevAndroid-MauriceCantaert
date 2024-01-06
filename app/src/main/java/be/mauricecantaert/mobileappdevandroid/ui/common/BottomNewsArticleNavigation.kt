@@ -8,17 +8,20 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import be.mauricecantaert.mobileappdevandroid.R
 import be.mauricecantaert.mobileappdevandroid.data.FetchOption
 
 @Composable
 fun BottomNewsArticleNavigation(
+    modifier: Modifier = Modifier,
     navigate: (FetchOption) -> Unit,
     canNavigatePrevious: Boolean,
     canNavigateNext: Boolean,
 ) {
     BottomAppBar(
+        modifier = modifier,
         actions = {
             IconButton(
                 onClick = { navigate(FetchOption.PREVIOUS) },

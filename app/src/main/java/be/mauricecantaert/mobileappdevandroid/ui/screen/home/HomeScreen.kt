@@ -26,19 +26,22 @@ fun HomeScreen(
     homeViewModel: HomeViewModel,
     networkAvailable: Boolean,
     context: Context = LocalContext.current,
+    pinnedBottomBar: Boolean,
 ) {
     val uiState by homeViewModel.uiState.collectAsState()
 
     Scaffold(
         bottomBar = {
-            BottomNewsArticleNavigation(
-                navigate = { homeViewModel.getNewsArticles(it, networkAvailable) },
-                canNavigatePrevious = uiState.navigationDetails.previous != null,
-                canNavigateNext = uiState.navigationDetails.next != null,
-            )
+            if (pinnedBottomBar) {
+                BottomNewsArticleNavigation(
+                    navigate = { homeViewModel.getNewsArticles(it, networkAvailable) },
+                    canNavigatePrevious = uiState.navigationDetails.previous != null,
+                    canNavigateNext = uiState.navigationDetails.next != null,
+                )
+            }
         },
         floatingActionButtonPosition = FabPosition.End,
-    ) {
+    ) { paddingValue ->
         when (val state = homeViewModel.apiState) {
             is NewsArticlesApiState.Error -> ErrorIndicator(state.errorType.getMessage(context))
             NewsArticlesApiState.Loading -> LoadingIndicator()
@@ -48,7 +51,7 @@ fun HomeScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
-                        .padding(it),
+                        .padding(paddingValue),
                 ) {
                     items(uiState.newsArticles) { article ->
                         NewsCard(
@@ -63,6 +66,15 @@ fun HomeScreen(
                                 )
                             },
                         )
+                    }
+                    item {
+                        if (!pinnedBottomBar) {
+                            BottomNewsArticleNavigation(
+                                navigate = { homeViewModel.getNewsArticles(it, networkAvailable) },
+                                canNavigatePrevious = uiState.navigationDetails.previous != null,
+                                canNavigateNext = uiState.navigationDetails.next != null,
+                            )
+                        }
                     }
                 }
             }
