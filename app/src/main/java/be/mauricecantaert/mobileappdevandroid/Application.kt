@@ -94,7 +94,7 @@ fun Application(
             ) {
                 composable(NavigationRoutes.Home.name) {
                     LaunchedEffect(navController.previousBackStackEntry) {
-//                         (Re)fetch latest articles when navigating to homescreen.
+//                         (Re)fetch latest articles when navigating to home-screen.
 //                          Used to check for article's favorite status after unfavoriting on saved articles page.
 //                          And during first load with a check if network is available
                         if (backStackEntry?.destination?.route == NavigationRoutes.Home.name) {
