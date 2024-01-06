@@ -46,7 +46,7 @@ fun NewsCardButtons(
         ) {
             Icon(
                 imageVector = if (isFavorite) Icons.Default.Star else Icons.TwoTone.Star,
-                contentDescription = stringResource(id = R.string.news_card_favorite),
+                contentDescription = stringResource(id = if (isFavorite) R.string.news_card_favorite else R.string.news_card_unfavorite),
                 modifier = Modifier.size(24.dp),
             )
         }
