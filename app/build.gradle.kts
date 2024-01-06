@@ -53,11 +53,16 @@ android {
 }
 
 dependencies {
+
+    // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    // Android & Jetpack Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.compose.runtime:runtime:1.5.4")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
@@ -69,12 +74,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui:1.5.4")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("androidx.compose.ui:ui-graphics:1.5.4")
     implementation("androidx.compose.ui:ui-tooling-preview:1.5.4")
     implementation("androidx.compose.material3:material3:1.2.0-beta01")
     implementation("androidx.compose.material3:material3-android:1.2.0-beta01")
     implementation("androidx.compose.material3:material3-window-size-class-android:1.2.0-beta01")
+
+    // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -83,8 +89,6 @@ dependencies {
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.6")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    // Testing
     implementation("org.mockito:mockito-core:5.8.0")
     implementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
@@ -103,4 +107,8 @@ dependencies {
 
     // Parsing HTML to store offline text
     implementation("org.jsoup:jsoup:1.17.2")
+}
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(file("../documentation/html"))
 }
