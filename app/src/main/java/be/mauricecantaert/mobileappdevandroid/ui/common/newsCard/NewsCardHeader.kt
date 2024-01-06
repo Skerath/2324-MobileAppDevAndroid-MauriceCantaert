@@ -43,6 +43,11 @@ fun NewsCardHeader(
     }
 }
 
+/**
+ * Formats the provided ISO 8601 date-time string into a human-readable date format.
+ * @param iso8601String The date-time string in ISO 8601 format.
+ * @return A [String] representing the formatted date in the pattern "MMMM d, yyyy" (e.g., January 7, 2024).
+ */
 private fun formatPublishDate(iso8601String: String): String = LocalDateTime
     .parse(iso8601String, DateTimeFormatter.ISO_DATE_TIME)
     .format(DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH))

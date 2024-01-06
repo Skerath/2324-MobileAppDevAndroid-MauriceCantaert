@@ -19,6 +19,11 @@ interface AppContainer {
     val newsRepository: NewsRepository
 }
 
+/**
+ * Default implementation of [AppContainer] providing access to the necessary components for the application.
+ *
+ * @property context The application context used to initialize various components.
+ */
 class DefaultAppContainer(
     private val context: Context,
 ) : AppContainer {
@@ -65,6 +70,10 @@ class DefaultAppContainer(
         database.newsDao()
     }
 
+    /**
+     * Lazy-initialized [NewsRepository] instance combining APIs for remote and local data sources.
+     * Provides the [NewsRepository] interface to manage news articles, both fetched online and saved offline.
+     */
     override val newsRepository: NewsRepository by lazy {
         NewsApiRepository(
             newsApiService = newsApiRetrofitService,

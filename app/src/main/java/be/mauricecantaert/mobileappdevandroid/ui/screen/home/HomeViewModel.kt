@@ -36,6 +36,9 @@ class HomeViewModel(
     private val _uiState = MutableStateFlow(NewsArticleListState())
     val uiState = _uiState.asStateFlow()
 
+    /**
+     * Companion object to provide a [ViewModelProvider.Factory] to create instances of [HomeViewModel].
+     */
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

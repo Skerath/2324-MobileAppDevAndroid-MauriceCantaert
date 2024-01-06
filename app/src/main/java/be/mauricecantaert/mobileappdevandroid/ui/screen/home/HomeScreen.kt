@@ -9,11 +9,13 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import be.mauricecantaert.mobileappdevandroid.data.FetchOption
 import be.mauricecantaert.mobileappdevandroid.model.NewsArticlesApiState
 import be.mauricecantaert.mobileappdevandroid.model.getMessage
 import be.mauricecantaert.mobileappdevandroid.ui.common.BottomNewsArticleNavigation
@@ -29,6 +31,10 @@ fun HomeScreen(
     pinnedBottomBar: Boolean,
 ) {
     val uiState by homeViewModel.uiState.collectAsState()
+
+    LaunchedEffect(networkAvailable) {
+        if (networkAvailable) homeViewModel.getNewsArticles(FetchOption.RESTART, true)
+    }
 
     Scaffold(
         bottomBar = {
@@ -50,8 +56,7 @@ fun HomeScreen(
                     columns = GridCells.Fixed(1),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier
-                        .padding(paddingValue),
+                    modifier = Modifier.padding(paddingValue),
                 ) {
                     items(uiState.newsArticles) { article ->
                         NewsCard(

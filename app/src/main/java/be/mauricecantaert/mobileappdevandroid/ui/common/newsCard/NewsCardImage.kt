@@ -26,7 +26,6 @@ fun NewsCardImage(
         verticalAlignment = Alignment.Top,
         modifier = Modifier.padding(bottom = 8.dp),
     ) {
-        // Image
         Box(
             modifier = Modifier
                 .size(130.dp)

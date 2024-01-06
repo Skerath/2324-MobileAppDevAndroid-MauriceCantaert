@@ -21,6 +21,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.IOException
 
+/**
+ * ViewModel responsible for handling saved articles.
+ *
+ * @property newsApiRepository The repository providing access to news-related data and operations.
+ */
 class SavedViewModel(
     private val newsApiRepository: NewsRepository,
 ) : ViewModel() {
@@ -33,6 +38,9 @@ class SavedViewModel(
         getNewsArticles()
     }
 
+    /**
+     * Companion object to provide a [ViewModelProvider.Factory] to create instances of [SavedViewModel].
+     */
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

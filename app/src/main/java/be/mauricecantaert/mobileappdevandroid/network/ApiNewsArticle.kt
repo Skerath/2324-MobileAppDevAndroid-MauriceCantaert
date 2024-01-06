@@ -6,6 +6,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
+/**
+ * Serializable data class representing the API response for news articles.
+ * @property count The total count of news articles.
+ * @property next The URL to fetch the next articles in a paginated manner.
+ * @property previous The URL to fetch the next articles in a paginated manner.
+ * @property results The list of API news articles.
+ */
 @Serializable
 data class ApiNewsArticlesResponse(
     val count: Long,
@@ -14,6 +21,10 @@ data class ApiNewsArticlesResponse(
     val results: List<ApiNewsArticle>,
 )
 
+/**
+ * Extension function converting the API news articles response to a domain object.
+ * @return A [Pair] of [NavigationDetails] and a [List] of [NewsArticle].
+ */
 fun ApiNewsArticlesResponse.asDomainObject(): Pair<NavigationDetails, List<NewsArticle>> =
     NavigationDetails(
         next = next,
@@ -30,6 +41,16 @@ fun ApiNewsArticlesResponse.asDomainObject(): Pair<NavigationDetails, List<NewsA
         )
     }
 
+/**
+ * Serializable data class representing an API news article.
+ * @property id The unique identifier of the news article.
+ * @property title The title of the news article.
+ * @property url The URL of the news article.
+ * @property imageUrl The URL of the news article thumbnail.
+ * @property newsSite The news site / author providing the article.
+ * @property summary The summary of the news article.
+ * @property publishedAt The publication date of the news article.
+ */
 @Serializable
 data class ApiNewsArticle(
     val id: Long,
@@ -42,19 +63,7 @@ data class ApiNewsArticle(
     @Transient
     @SerialName("updated_at")
     val updatedAt: String = "",
-    val featured: Boolean,
-    @Transient val launches: List<Launch> = listOf(),
-    @Transient val events: List<Event> = listOf(),
-)
-
-@Serializable
-data class Launch(
-    @SerialName("launch_id") val launchId: String,
-    val provider: String,
-)
-
-@Serializable
-data class Event(
-    @SerialName("event_id") val eventId: Long,
-    val provider: String,
+    @Transient val featured: Boolean = false,
+    @Transient val launches: List<Any> = listOf(),
+    @Transient val events: List<Any> = listOf(),
 )
